@@ -5,6 +5,9 @@ ARG ELASTALERT_URL=https://github.com/Yelp/elastalert/archive/$ELASTALERT_VERSIO
 ENV ELASTALERT_URL=${ELASTALERT_URL}
 ENV ELASTALERT_HOME /opt/elastalert
 
+LABEL architecture="s390x" \
+      os="linux"
+
 WORKDIR /opt
 
 RUN apk add --update --no-cache ca-certificates openssl-dev openssl python3-dev python3 libffi-dev gcc musl-dev wget && \
@@ -18,11 +21,14 @@ WORKDIR "${ELASTALERT_HOME}"
 RUN python3 setup.py install
 
 FROM node:alpine
-LABEL maintainer="John Susek <john@johnsolo.net>"
+LABEL maintainer="John Susek <john@johnsolo.net>"\
+      architecture="s390x" \
+      os="linux"
 ENV TZ Etc/UTC
 
 RUN apk add --update --no-cache curl tzdata python3 ca-certificates openssl-dev openssl python3-dev gcc musl-dev make libffi-dev libmagic
 
+COPY --from=py-ea /usr/local/lib/python3.8/site-packages/ /usr/lib/python3.8/site-packages
 COPY --from=py-ea /usr/lib/python3.8/site-packages /usr/lib/python3.8/site-packages
 COPY --from=py-ea /opt/elastalert /opt/elastalert
 # COPY --from=py-ea /usr/bin/elastalert* /usr/bin/
