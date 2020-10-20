@@ -79,4 +79,7 @@ USER node
 
 WORKDIR /opt/elastalert-server
 
-ENTRYPOINT ["npm", "start"]
+#ENTRYPOINT ["npm", "start"]
+
+#for debugging
+ENTRYPOINT ["tail","-f","/dev/null"]
