@@ -56,6 +56,13 @@ RUN mkdir -p /opt/elastalert/rules/ /opt/elastalert/server_data/tests/ \
 
 RUN pip3 install --upgrade pip
 
+RUN chgrp -R 0 /opt \
+#    && chgrp -R 0 /usr/lib/python3.8 \
+    && chmod -R g=u /opt \
+#    && chmod -R g=u /usr/lib/python3.8
+    
+USER node
+
 EXPOSE 3030
 
 WORKDIR /opt/elastalert
@@ -69,13 +76,6 @@ RUN sed -i 's/jira>=1.0.10,<1.0.15/jira>=2.0.0/g' requirements.txt && \
     sed -i 's/requests>=2.0.0/requests>=2.10.0/g' requirements.txt && \
     sed -i 's/twilio==6.0.0/twilio>=6.0.0,<6.1/g' requirements.txt && \
     pip3 install -r requirements.txt --user
-
-RUN chgrp -R 0 /opt \
-    && chgrp -R 0 /usr/lib/python3.8 \
-    && chmod -R g=u /opt \
-    && chmod -R g=u /usr/lib/python3.8
-    
-USER node
 
 WORKDIR /opt/elastalert-server
 
