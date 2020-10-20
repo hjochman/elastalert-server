@@ -20,11 +20,13 @@ WORKDIR "${ELASTALERT_HOME}"
 
 RUN python3 setup.py install
 
+############################################# Building Main image ########################################################
 FROM node:alpine
 LABEL maintainer="John Susek <john@johnsolo.net>"\
       architecture="s390x" \
       os="linux"
 ENV TZ Etc/UTC
+ENV PYTHONPATH=/usr/local/lib/python3.8/site-packages
 
 RUN apk add --update --no-cache curl tzdata python3 ca-certificates openssl-dev openssl python3-dev gcc musl-dev make libffi-dev libmagic
 
