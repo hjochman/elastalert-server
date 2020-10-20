@@ -60,8 +60,8 @@ RUN pip3 install --upgrade pip
 
 RUN chgrp -R 0 /opt \
 #    && chgrp -R 0 /usr/lib/python3.8 \
-    && chmod -R g=u /opt \
-#    && chmod -R g=u /usr/lib/python3.8
+#    && chmod -R g=u /usr/lib/python3.8 \
+    && chmod -R g=u /opt
     
 USER node
 
