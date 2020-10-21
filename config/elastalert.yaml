@@ -36,9 +36,9 @@ use_ssl: True
 verify_certs: True
 
 # The secrets from the curator must be mounted!
-ca_certs: /etc/curator/keys/admin-ca
-client_cert: /etc/curator/keys/admin-cert
-client_key: /etc/curator/keys/admin-key
+ca_certs: /etc/curator/keys/ca
+client_cert: /etc/curator/keys/cert
+client_key: /etc/curator/keys/key
 
 # smpt settings
 email: <DEST_MAIL_ADDRESS>
