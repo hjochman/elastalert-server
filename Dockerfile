@@ -30,7 +30,7 @@ ENV PYTHONPATH=/usr/local/lib/python3.8/site-packages
 
 RUN apk add --update --no-cache curl tzdata python3 ca-certificates openssl-dev openssl python3-dev gcc musl-dev make libffi-dev libmagic
 
-COPY --from=py-ea /usr/local/lib/python3.8/site-packages/ /usr/lib/python3.8/site-packages
+COPY --from=py-ea /usr/local/lib/python3.8/site-packages/elastalert* /usr/lib/python3.8/site-packages
 COPY --from=py-ea /usr/lib/python3.8/site-packages /usr/lib/python3.8/site-packages
 COPY --from=py-ea /opt/elastalert /opt/elastalert
 # COPY --from=py-ea /usr/bin/elastalert* /usr/bin/
