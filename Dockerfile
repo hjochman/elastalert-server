@@ -22,9 +22,13 @@ RUN python3 setup.py install
 
 ############################################# Building Main image ########################################################
 FROM node:alpine
-LABEL maintainer="John Susek <john@johnsolo.net>"\
+LABEL io.k8s.description="ElastAlert is a simple framework for alerting on anomalies, spikes, or other patterns of interest from data in Elasticsearch." \
+      io.k8s.display-name="ElastAlert server" \
+      io.openshift.tags="logging, kibana, elasticsearch, cluster-logging" \
+      io.openshift.expose-services="http,3030" \
       architecture="s390x" \
-      os="linux"
+      maintainer="nobody" \
+      name="elasticalert" 
 ENV TZ Etc/UTC
 ENV PYTHONPATH=/usr/local/lib/python3.8/site-packages
 
@@ -56,12 +60,10 @@ RUN mkdir -p /opt/elastalert/rules/ /opt/elastalert/server_data/tests/ \
     && chown -R node:0 /opt \
     && chown -R node:0 /usr/lib/python3.8 \
     && chmod -R g=u /opt \
-    && chmod -R g=u /usr/lib/python3.8 
-
-RUN pip3 install --upgrade pip
+    && chmod -R g=u /usr/lib/python3.8 \
+    && pip3 install --upgrade pip
 
 WORKDIR /opt/elastalert
-
 # Sync requirements.txt and setup.py & update py-zabbix #2818 (https://github.com/Yelp/elastalert/pull/2818)
 # Pin elasticsearch to 7.0.0 in requirements.txt #2684 (https://github.com/Yelp/elastalert/pull/2684)
 # version 0.2.1 broken for python 3.7 (jira) #2437 (https://github.com/Yelp/elastalert/issues/2437)
@@ -79,7 +81,7 @@ EXPOSE 3030
 
 WORKDIR /opt/elastalert-server
 
-#ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["npm", "start"]
 
 #for debugging
-ENTRYPOINT ["tail","-f","/dev/null"]
+#ENTRYPOINT ["tail","-f","/dev/null"]
