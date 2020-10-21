@@ -67,7 +67,7 @@ WORKDIR /opt/elastalert
 # version 0.2.1 broken for python 3.7 (jira) #2437 (https://github.com/Yelp/elastalert/issues/2437)
 RUN sed -i 's/jira>=1.0.10,<1.0.15/jira>=2.0.0/g' requirements.txt && \
     sed -i 's/elasticsearch>=7.0.0/elasticsearch==7.0.0/g' requirements.txt && \
-    sed -i 's/py-zabbix==1.1.3/pyzabbix>=1.1.3/g' requirements.txt && \
+    sed -i 's/py-zabbix==1.1.3/py-zabbix>=1.1.3/g' requirements.txt && \
     sed -i 's/requests>=2.0.0/requests>=2.10.0/g' requirements.txt && \
     sed -i 's/twilio==6.0.0/twilio>=6.0.0,<6.1/g' requirements.txt && \
     pip3 install -r requirements.txt     
