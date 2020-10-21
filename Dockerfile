@@ -53,15 +53,12 @@ COPY patches/alerts.py /opt/elastalert/elastalert/alerts.py
 # Add default rules directory
 # Set permission as unpriviledged user (1000:1000), compatible with Kubernetes
 RUN mkdir -p /opt/elastalert/rules/ /opt/elastalert/server_data/tests/ \
-    && chown -R node:node /opt \
-    && chown -R node:node /usr/lib/python3.8
+    && chown -R node:0 /opt \
+    && chown -R node:0 /usr/lib/python3.8 \
+    && chmod -R g=u /opt \
+    && chmod -R g=u /usr/lib/python3.8 
 
 RUN pip3 install --upgrade pip
-
-RUN chgrp -R 0 /opt \
-#    && chgrp -R 0 /usr/lib/python3.8 \
-#    && chmod -R g=u /usr/lib/python3.8 \
-    && chmod -R g=u /opt
     
 USER node
 
